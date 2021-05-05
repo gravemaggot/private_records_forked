@@ -7,6 +7,8 @@
 	</div>
 </div>
 
+<div hidden id="is_worker"></div>
+
 <form action="<%= "/candidates/#{@candidate.guid}" %>" method="POST" enctype="multipart/form-data">
 	<input name="_method" type="hidden" value="patch" />
 	<div class="card" hidden="true">
@@ -28,9 +30,6 @@
 			<a class="nav-link" id="pills-education-tab" data-toggle="pill" href="#pills-education" role="tab" aria-controls="pills-education" aria-selected="false">Образование</a>
 		</li>
 		<li class="nav-item" role="presentation">
-			<a class="nav-link" id="pills-skills-tab" data-toggle="pill" href="#pills-skills" role="tab" aria-controls="pills-skills" aria-selected="false">Навыки</a>
-		</li>
-		<li class="nav-item" role="presentation">
 			<a class="nav-link" id="pills-experience-tab" data-toggle="pill" href="#pills-experience" role="tab" aria-controls="pills-experience" aria-selected="false">Опыт</a>
 		</li>
 		<li class="nav-item" role="presentation">
@@ -42,11 +41,10 @@
 	</ul>
 
 	<div class="tab-content" id="pills-tabContent">
-		<div class="tab-pane fade show active" id="pills-general-information" 	 role="tabpanel" aria-labelledby="pills-general-information-tab"	><%= erb :'candidates/_general_information' %></div>
-		<div class="tab-pane fade" 			   id="pills-education" 			 role="tabpanel" aria-labelledby="pills-education-tab"				><%= erb :'candidates/_education' %></div>
-		<div class="tab-pane fade" 			   id="pills-skills" 				 role="tabpanel" aria-labelledby="pills-skills-tab"					><%= erb :'candidates/_skills' %></div>
-		<div class="tab-pane fade" 			   id="pills-experience" 			 role="tabpanel" aria-labelledby="pills-experience-tab"				><%= erb :'candidates/_experience' %></div>
-		<div class="tab-pane fade" 			   id="pills-recommendations" 		 role="tabpanel" aria-labelledby="pills-recommendations-tab"		><%= erb :'candidates/_recommendations' %></div>
-		<div class="tab-pane fade" 			   id="pills-additional-information" role="tabpanel" aria-labelledby="pills-additional-information-tab"	><%= erb :'candidates/_additional_information' %></div>
+		<div class="tab-pane fade show active" id="pills-general-information" 	 role="tabpanel" aria-labelledby="pills-general-information-tab"	><%= erb :'candidates/_general_information_worker' %></div>
+		<div class="tab-pane fade" 			   id="pills-education" 			 role="tabpanel" aria-labelledby="pills-education-tab"				><%= erb :'candidates/_education_worker' %></div>
+		<div class="tab-pane fade" 			   id="pills-experience" 			 role="tabpanel" aria-labelledby="pills-experience-tab"				><%= erb :'candidates/_experience_worker' %></div>
+		<div class="tab-pane fade" 			   id="pills-recommendations" 		 role="tabpanel" aria-labelledby="pills-recommendations-tab"		><%= erb :'candidates/_recommendations_worker' %></div>
+		<div class="tab-pane fade" 			   id="pills-additional-information" role="tabpanel" aria-labelledby="pills-additional-information-tab"	><%= erb :'candidates/_additional_information_worker' %></div>
 	</div>
 </form>

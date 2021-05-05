@@ -64,6 +64,8 @@ GEM
       rack-protection (= 2.1.0)
       sinatra (= 2.1.0)
       tilt (~> 2.0)
+    sinatra-support (1.2.2)
+      sinatra (>= 1.0)
     ssrf_filter (1.0.7)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -79,6 +81,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   carrierwave (~> 1.0)
   carrierwave-mongoid
+  i18n
   mongoid
   racksh
   rake
@@ -87,9 +90,10 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra-contrib
+  sinatra-support
 
 RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   2.2.0
+   2.2.9
