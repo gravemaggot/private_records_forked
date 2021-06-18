@@ -76,13 +76,14 @@ module Helpers
   end
 
   # Candidate write methods
-  def error(object)
+  def error(object, fldsnms)
     # object.errors.full_messages.first
     error_texts = []
     object.errors.each do |k, v|
       error_text = t("candidate.error.#{k}")
       error_text = "#{k} #{v}" unless error_text.index('translation missing:').nil?
       error_texts << error_text
+      fldsnms << k
     end
     error_texts[0] unless error_texts.empty?
   end

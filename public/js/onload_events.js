@@ -35,6 +35,16 @@ $(function(){
 
     contentElement = document.getElementById('reccomenders_content')
     if (contentElement){ fill_reccomenders_content(contentElement) }
+    
+    // Validations
+    fields = document.getElementById("validate_fields").value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
+    for (i in fields) {
+        el = document.getElementById("candidate_" + fields[i])
+        if (el){
+            el.setAttribute('required', '')
+            // if table ...
+        }
+    }    
 
     // Delete button
     $(document).on("click", ".delete", function(){

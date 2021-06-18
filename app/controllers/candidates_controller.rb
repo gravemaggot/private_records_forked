@@ -60,7 +60,7 @@ class CandidatesController < ApplicationController
       params[:candidate][:position] = vacancy_guid if @vacancy
 
       @vacancies = Vacancy.all
-      @error = error(candidate)
+      @error = error(candidate, [])
       erb :new
     end
   end
@@ -94,8 +94,8 @@ class CandidatesController < ApplicationController
 
       erb :show
     else
-      @error = error(@candidate)
       intitalise_form_variables
+      @error = error(@candidate, @validate_fields)
       get_view_for_type(:edit, @candidate[:position_type])
     end
   end

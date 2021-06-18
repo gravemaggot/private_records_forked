@@ -107,13 +107,13 @@ class Candidate
             :position,
             :first_name,
             :last_name,
-            :phone,
             :email,
             presence: true
 
   validates :ready_to_start_work,
-            :sur_name,
             :date,
+            :phone,
+            :relatives,
             presence: true, unless: proc { |a| a.active }
 
   validates :data_verification,

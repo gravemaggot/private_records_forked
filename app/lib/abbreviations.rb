@@ -45,5 +45,6 @@ module Abbreviations
     @work_experience_areas        = work_experience_areas
     @desired_pay_system           = desired_pay_system
     @tables_names                 = tables_names
+    @validate_fields              = []
   end
 end
