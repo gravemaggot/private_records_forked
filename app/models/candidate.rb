@@ -114,6 +114,7 @@ class Candidate
             :date,
             :phone,
             :relatives,
+            :experience,
             presence: true, unless: proc { |a| a.active }
 
   validates :data_verification,
