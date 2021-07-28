@@ -1,7 +1,0 @@
-env.rb
-.gitignore
-.idea
-/public/uploads/
-/config/public/
-.env.rb
-
