@@ -509,3 +509,39 @@ function  deactive_candidate(){
     document.getElementById("candidate_active").value = "false"
     return (true)
 }
+
+// Validation
+
+function addValidationTags(validate_fields){
+    if (validate_fields == null){
+        return
+    }
+
+    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
+    for (i in fields) {
+        el = document.getElementById("candidate_" + fields[i])
+        if (el){
+            if (el.className.indexOf("table table-bordered") > -1){
+                el.classList.value = "table table-danger" 
+            }else if (el.className.indexOf("input-group-prepend") > -1){
+                el.parentElement.parentElement.parentElement.querySelectorAll("label")[0].style = "color:#dc3545"
+                el.style = "color:#dc3545"
+            }else{
+                el.setAttribute('required', '')
+            }
+        }else if(fields[i] == "experience"){
+            el = document.getElementById("experience_fields") 
+            types = ["input", "textarea"]
+            for (typeI in types) { 
+                selectType = types[typeI]
+                inputSelector = el.querySelectorAll(selectType);
+                for (j in inputSelector) {
+                    if (+/\d+/.exec(j) == j){
+                        childEl = inputSelector[j]
+                        if (childEl) {childEl.setAttribute('required', '')}
+                    }    
+                } 
+            }  
+        }
+    }
+}

@@ -121,6 +121,11 @@ class Candidate
             :last_average_monthly_income,
             presence: true, if: proc { |a| !a.active && a.position_type == 'worker' }
 
+  validates :overtime_work,
+            :business_trips,
+            :training,
+            presence: true, if: proc { |a| !a.active && a.position_type != 'worker' }
+
   index({ guid: 1 }, { unique: true, name: 'guid_index' })
 
   scope :id,            ->(id)            { where(id: id) }

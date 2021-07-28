@@ -37,33 +37,7 @@ $(function(){
     if (contentElement){ fill_reccomenders_content(contentElement) }
     
     // Validations
-    fields = document.getElementById("validate_fields").value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
-    for (i in fields) {
-        el = document.getElementById("candidate_" + fields[i])
-        if (el){
-            if (el.className.indexOf("table table-bordered") > -1){
-                el.classList.value = "table table-danger"   
-            }else{
-                el.setAttribute('required', '')
-            }
-        }else if(fields[i] == "experience"){
-            el = document.getElementById("experience_fields") 
-            types = ["input", "textarea"]
-            for (typeI in types) { 
-                selectType = types[typeI]
-                inputSelector = el.querySelectorAll(selectType);
-                for (j in inputSelector) {
-                    if (+/\d+/.exec(j) == j){
-                        childEl = inputSelector[j]
-                    
-                        if (childEl) {
-                            childEl.setAttribute('required', '') 
-                        }
-                    }    
-                } 
-            }  
-        }
-    }    
+    addValidationTags(document.getElementById("validate_fields"))    
 
     // Delete button
     $(document).on("click", ".delete", function(){
