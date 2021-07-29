@@ -512,7 +512,7 @@ function  deactive_candidate(){
 
 // Validation
 
-function addValidationTags(validate_fields){
+function add_validation_tags(validate_fields){
     if (validate_fields == null){
         return
     }
@@ -543,5 +543,13 @@ function addValidationTags(validate_fields){
                 } 
             }  
         }
+    }
+}
+
+function pills_cathegory(){
+    cathegory_hash = {
+        "first_name" : "general-information",
+        "last_name"  : "general-information",
+        "email"      : "general-information"    
     }
 }

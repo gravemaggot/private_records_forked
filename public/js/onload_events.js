@@ -37,7 +37,7 @@ $(function(){
     if (contentElement){ fill_reccomenders_content(contentElement) }
     
     // Validations
-    addValidationTags(document.getElementById("validate_fields"))    
+    add_validation_tags(document.getElementById("validate_fields"))    
 
     // Delete button
     $(document).on("click", ".delete", function(){
