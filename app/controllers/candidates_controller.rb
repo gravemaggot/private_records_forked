@@ -19,7 +19,7 @@ class CandidatesController < ApplicationController
   get '/candidates/new' do
     if user_signed_in?
       @candidate = Candidate.new
-      intitalise_form_variables
+      intitalise_form_variables(@candidate.position_type)
       @vacancies = Vacancy.all
       erb :new
     else
@@ -31,7 +31,7 @@ class CandidatesController < ApplicationController
   # edit
   get '/candidates/:guid/edit' do
     if candidate
-      intitalise_form_variables
+      intitalise_form_variables(@candidate.position_type)
       if candidate[:active] && candidate.active || user_signed_in?
         get_view_for_type(:edit, @candidate[:position_type])
       else
@@ -80,7 +80,10 @@ class CandidatesController < ApplicationController
     @candidate = candidate
     @candidate.update(params[:candidate])
     @candidate.image = params[:image] if !candidate[:image_identifier] && params[:image]
-    add_arrays_to_candidate(@candidate, params) # TODO: need refactoring
+
+    position_type = @candidate[:position_type]
+
+    add_arrays_to_candidate(@candidate, params, position_type, false) # TODO: need refactoring
 
     if @candidate.save
       @message_success = if user_signed_in?
@@ -94,9 +97,11 @@ class CandidatesController < ApplicationController
 
       erb :show
     else
-      intitalise_form_variables
+      add_arrays_to_candidate(@candidate, params, position_type, true)
+
+      intitalise_form_variables(position_type)
       @error = error(@candidate, @validate_fields)
-      get_view_for_type(:edit, @candidate[:position_type])
+      get_view_for_type(:edit, position_type)
     end
   end
 

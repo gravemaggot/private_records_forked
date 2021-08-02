@@ -90,26 +90,54 @@ module Helpers
 
   # fill by params
   # TODO: need refactoring(we must use: https://mongomapper.com/documentation/plugins/associations.html#many-to-many)
-  def add_arrays_to_candidate(candidate, params)
-    tables_names.each do |table_name, ver_field|
+  def add_arrays_to_candidate(candidate, params, type, always_save)
+    tables_names(type).each do |table_name, ver_fields|
       arr = []
       params.select { |key| key == table_name }.each_value do |table|
         table.each_value do |row|
-          arr << row unless row[ver_field] == ''
+          arr << row unless do_not_add(row, ver_fields) && !always_save
         end
       end
       candidate[table_name] = arr
     end
   end
 
-  def tables_names
+  def do_not_add(row, ver_fields)
+    do_not_add = false
+
+    ver_fields.each do |ver_field|
+      do_not_add = true if row[ver_field] == ''
+    end
+
+    do_not_add
+  end
+
+  def tables_names(type)
+    if type == 'worker'
+      table_names_worker
+    else
+      table_names_spec
+    end
+  end
+
+  def table_names_worker
     {
-      'relatives' => :name,
-      'education' => :inst,
-      'extra' => :name,
-      'language' => :name,
-      'experience' => :name,
-      'reccomenders' => :name
+      'relatives' => %I[name type date job adr],
+      'education' => %I[inst begin end spec],
+      'extra' => %I[inst year name duration],
+      'experience' => %I[name period_start period_finish pos dism duties],
+      'reccomenders' => %I[name]
+    }
+  end
+
+  def table_names_spec
+    {
+      'relatives' => %I[name type date job adr],
+      'education' => %I[inst begin end spec form],
+      'extra' => %I[inst year name duration],
+      'language' => %I[name],
+      'experience' => %I[name period_start period_finish pos dism duties field workers subords],
+      'reccomenders' => %I[name]
     }
   end
 

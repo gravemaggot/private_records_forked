@@ -37,7 +37,9 @@ $(function(){
     if (contentElement){ fill_reccomenders_content(contentElement) }
     
     // Validations
-    add_validation_tags(document.getElementById("validate_fields"))    
+    validate_fields = document.getElementById("validate_fields")
+    add_validation_tags(validate_fields)  
+    switch_pills_on_last_field(validate_fields)  
 
     // Delete button
     $(document).on("click", ".delete", function(){

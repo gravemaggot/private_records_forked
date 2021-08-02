@@ -546,10 +546,42 @@ function add_validation_tags(validate_fields){
     }
 }
 
-function pills_cathegory(){
-    cathegory_hash = {
-        "first_name" : "general-information",
-        "last_name"  : "general-information",
-        "email"      : "general-information"    
+function switch_pills_on_last_field(validate_fields){
+    if (validate_fields == null){
+        return
     }
+
+    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
+
+    if (fields.length == 0){
+        return
+    }
+
+    fieldname = fields[0]
+    $(pills_cathegory(fieldname)).tab('show')
+}
+
+function pills_cathegory(fieldname){
+    cathegory_hash = {
+        "first_name"                  : '#pills-tab li:nth-child(1) a',
+        "last_name"                   : '#pills-tab li:nth-child(1) a',
+        "email"                       : '#pills-tab li:nth-child(1) a',    
+        "date"                        : '#pills-tab li:nth-child(1) a',    
+        "phone"                       : '#pills-tab li:nth-child(1) a',    
+        "relatives"                   : '#pills-tab li:nth-child(1) a',    
+        "experience"                  : '#pills-tab li:nth-child(4) a',    
+        "data_verification"           : '#pills-tab li:nth-child(5) a',    
+        "last_average_monthly_income" : '#pills-tab li:nth-child(5) a',    
+        "overtime_work"               : '#pills-tab li:nth-child(5) a',    
+        "business_trips"              : '#pills-tab li:nth-child(5) a',    
+        "training"                    : '#pills-tab li:nth-child(5) a',    
+        "ready_to_start_work"         : '#pills-tab li:nth-child(5) a'    
+    }
+
+    cathegory = cathegory_hash[fieldname]
+    if (cathegory == null){
+        cathegory = '#pills-tab li:nth-child(1) a'
+    }
+
+    return (cathegory)
 }
