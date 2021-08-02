@@ -40,10 +40,11 @@ module Abbreviations
   end
 
   # Form-s helpers
-  def intitalise_form_variables
+  def intitalise_form_variables(type)
     @last_job_like_dislike_params = last_job_like_dislike_params
     @work_experience_areas        = work_experience_areas
     @desired_pay_system           = desired_pay_system
-    @tables_names                 = tables_names
+    @tables_names                 = tables_names(type)
+    @validate_fields              = []
   end
 end

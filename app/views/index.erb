@@ -8,6 +8,7 @@
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
+        <th scope="col">Состояние</th>
         <th scope="col">GUID</th>
         <th scope="col">Фото</th>
         <th scope="col">ФИО</th>
@@ -18,8 +19,9 @@
     </thead>
     <tbody>
     <% unless @candidates.nil? %>
-        <% @candidates.each do |candidate| %>
+        <% @candidates.order('active DESC, created_at DESC').each do |candidate| %>
           <tr>
+            <td><%= 'Заполнение' if candidate.active %></td>
             <td><%= candidate.guid %></td>
             <td>
             <% if candidate.image_identifier %>

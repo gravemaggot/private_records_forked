@@ -176,9 +176,14 @@ function add_experience_table_row(position_type=""){
         rowElement.classList.add("form-row");
 
         rowElement.innerHTML =
-            '<div class="form-group col-md-3">' +
+            '<div class="form-group col-md-2">' +
             '   <label for="expieience' + String(count) + 'Name">Название организации(' + String(count + 1) + ')</label>' +
             '</div>' +
+            '<div class="form-group col-md-1">' +
+            '   <a class="delete" title="Удалить" data-toggle="tooltip">' + 
+            '       <i class="material-icons" style="color:red"></i>' + 
+            '   </a>' +
+            '</div>' + 
             '<div class="form-group col-md-9">' +
             '   <input class="form-control" type="text" id="experience_' + String(count) + '_name" name="experience[' + String(count) + '][name]">' +
             '</div>';
@@ -501,6 +506,33 @@ function fill_experience_content(contentElement, position_type){
         }
         rowsElement.childNodes[rowsElement.childNodes.length-1].childNodes[0].childNodes[1].value = rowData["duties"]
     }
+
+    set_delete_events()
+}
+
+function remove_expirience_row(num){
+    rowsElement = document.getElementById("experience_fields")    
+    for (i=1; i<=6; i++){
+        rowsElement.removeChild(rowsElement.childNodes[(num+1)*6-i])    
+    }
+
+    set_delete_events()
+}
+
+function set_delete_events(){
+    rowsElement = document.getElementById("experience_fields")
+    iconsList = rowsElement.querySelectorAll("a")
+    for (i=0; i < iconsList.length; i++){
+        iconsList[i].childNodes[1].onclick = get_delete_function(i)
+    }
+
+    return (false)
+}
+
+function get_delete_function(i){
+    return function(){
+        remove_expirience_row(i)    
+    }
 }
 
 // Write Candidate
@@ -508,4 +540,84 @@ function fill_experience_content(contentElement, position_type){
 function  deactive_candidate(){
     document.getElementById("candidate_active").value = "false"
     return (true)
+}
+
+// Validation
+
+function add_validation_tags(validate_fields){
+    if (validate_fields == null){
+        return
+    }
+
+    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
+    for (i in fields) {
+        el = document.getElementById("candidate_" + fields[i])
+        if (el){
+            if (el.className.indexOf("table table-bordered") > -1){
+                el.classList.value = "table table-danger"
+                set_required_for_fields(el, ["input", "textarea"])
+            }else if (el.className.indexOf("input-group-prepend") > -1){
+                el.parentElement.parentElement.parentElement.querySelectorAll("label")[0].style = "color:#dc3545"
+                el.style = "color:#dc3545"
+            }else{
+                el.setAttribute('required', '')
+            }
+        }else if(fields[i] == "experience"){
+            el = document.getElementById("experience_fields") 
+            set_required_for_fields(el, ["input", "textarea"])
+        }
+    }
+}
+
+function set_required_for_fields(table_el, types){
+    for (typeI in types) { 
+        selectType = types[typeI]
+        inputSelector = table_el.querySelectorAll(selectType);
+        for (j in inputSelector) {
+            if (+/\d+/.exec(j) == j){
+                childEl = inputSelector[j]
+                if (childEl) {childEl.setAttribute('required', '')}
+            }    
+        } 
+    }  
+}
+
+function switch_pills_on_last_field(validate_fields){
+    if (validate_fields == null){
+        return
+    }
+
+    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
+
+    if (fields.length == 0){
+        return
+    }
+
+    fieldname = fields[0]
+    $(pills_cathegory(fieldname)).tab('show')
+}
+
+function pills_cathegory(fieldname){
+    cathegory_hash = {
+        "first_name"                  : '#pills-tab li:nth-child(1) a',
+        "last_name"                   : '#pills-tab li:nth-child(1) a',
+        "email"                       : '#pills-tab li:nth-child(1) a',    
+        "date"                        : '#pills-tab li:nth-child(1) a',    
+        "phone"                       : '#pills-tab li:nth-child(1) a',    
+        "relatives"                   : '#pills-tab li:nth-child(1) a',    
+        "experience"                  : '#pills-tab li:nth-child(4) a',    
+        "data_verification"           : '#pills-tab li:nth-child(5) a',    
+        "last_average_monthly_income" : '#pills-tab li:nth-child(5) a',    
+        "overtime_work"               : '#pills-tab li:nth-child(5) a',    
+        "business_trips"              : '#pills-tab li:nth-child(5) a',    
+        "training"                    : '#pills-tab li:nth-child(5) a',    
+        "ready_to_start_work"         : '#pills-tab li:nth-child(5) a'    
+    }
+
+    cathegory = cathegory_hash[fieldname]
+    if (cathegory == null){
+        cathegory = '#pills-tab li:nth-child(1) a'
+    }
+
+    return (cathegory)
 }

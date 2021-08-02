@@ -76,39 +76,71 @@ module Helpers
   end
 
   # Candidate write methods
-  def error(object)
+  def error(object, fldsnms)
     # object.errors.full_messages.first
     error_texts = []
     object.errors.each do |k, v|
       error_text = t("candidate.error.#{k}")
       error_text = "#{k} #{v}" unless error_text.index('translation missing:').nil?
       error_texts << error_text
+      fldsnms << k
     end
     error_texts[0] unless error_texts.empty?
   end
 
   # fill by params
   # TODO: need refactoring(we must use: https://mongomapper.com/documentation/plugins/associations.html#many-to-many)
-  def add_arrays_to_candidate(candidate, params)
-    tables_names.each do |table_name, ver_field|
+  def add_arrays_to_candidate(candidate, params, type, always_save)
+    tables_names(type).each do |table_name, ver_fields|
       arr = []
+      do_not_add = false
       params.select { |key| key == table_name }.each_value do |table|
         table.each_value do |row|
-          arr << row unless row[ver_field] == ''
+          do_not_add = do_not_add(row, ver_fields) || do_not_add
+          arr << row
         end
       end
+      arr = [] if do_not_add && !always_save
       candidate[table_name] = arr
     end
   end
 
-  def tables_names
+  def do_not_add(row, ver_fields)
+    do_not_add = false
+
+    ver_fields.each do |ver_field|
+      do_not_add = true if row[ver_field] == ''
+    end
+
+    do_not_add
+  end
+
+  def tables_names(type)
+    if type == 'worker'
+      table_names_worker
+    else
+      table_names_spec
+    end
+  end
+
+  def table_names_worker
     {
-      'relatives' => :name,
-      'education' => :inst,
-      'extra' => :name,
-      'language' => :name,
-      'experience' => :name,
-      'reccomenders' => :name
+      'relatives' => %I[name type date job adr],
+      'education' => %I[inst begin end spec],
+      'extra' => %I[inst year name duration],
+      'experience' => %I[name period_start period_finish pos dism duties],
+      'reccomenders' => %I[name]
+    }
+  end
+
+  def table_names_spec
+    {
+      'relatives' => %I[name type date job adr],
+      'education' => %I[inst begin end spec form],
+      'extra' => %I[inst year name duration],
+      'language' => %I[name],
+      'experience' => %I[name period_start period_finish pos dism duties field workers subords],
+      'reccomenders' => %I[name]
     }
   end
 

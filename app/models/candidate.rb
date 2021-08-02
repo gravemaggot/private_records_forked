@@ -107,18 +107,24 @@ class Candidate
             :position,
             :first_name,
             :last_name,
-            :phone,
             :email,
             presence: true
 
   validates :ready_to_start_work,
-            :sur_name,
             :date,
+            :phone,
+            :relatives,
+            :experience,
             presence: true, unless: proc { |a| a.active }
 
   validates :data_verification,
             :last_average_monthly_income,
             presence: true, if: proc { |a| !a.active && a.position_type == 'worker' }
+
+  validates :overtime_work,
+            :business_trips,
+            :training,
+            presence: true, if: proc { |a| !a.active && a.position_type != 'worker' }
 
   index({ guid: 1 }, { unique: true, name: 'guid_index' })
 
