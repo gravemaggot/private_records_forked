@@ -522,7 +522,8 @@ function add_validation_tags(validate_fields){
         el = document.getElementById("candidate_" + fields[i])
         if (el){
             if (el.className.indexOf("table table-bordered") > -1){
-                el.classList.value = "table table-danger" 
+                el.classList.value = "table table-danger"
+                set_required_for_fields(el, ["input", "textarea"])
             }else if (el.className.indexOf("input-group-prepend") > -1){
                 el.parentElement.parentElement.parentElement.querySelectorAll("label")[0].style = "color:#dc3545"
                 el.style = "color:#dc3545"
@@ -531,19 +532,22 @@ function add_validation_tags(validate_fields){
             }
         }else if(fields[i] == "experience"){
             el = document.getElementById("experience_fields") 
-            types = ["input", "textarea"]
-            for (typeI in types) { 
-                selectType = types[typeI]
-                inputSelector = el.querySelectorAll(selectType);
-                for (j in inputSelector) {
-                    if (+/\d+/.exec(j) == j){
-                        childEl = inputSelector[j]
-                        if (childEl) {childEl.setAttribute('required', '')}
-                    }    
-                } 
-            }  
+            set_required_for_fields(el, ["input", "textarea"])
         }
     }
+}
+
+function set_required_for_fields(table_el, types){
+    for (typeI in types) { 
+        selectType = types[typeI]
+        inputSelector = table_el.querySelectorAll(selectType);
+        for (j in inputSelector) {
+            if (+/\d+/.exec(j) == j){
+                childEl = inputSelector[j]
+                if (childEl) {childEl.setAttribute('required', '')}
+            }    
+        } 
+    }  
 }
 
 function switch_pills_on_last_field(validate_fields){
