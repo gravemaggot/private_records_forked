@@ -83,7 +83,7 @@ class CandidatesController < ApplicationController
 
     position_type = @candidate[:position_type]
 
-    add_arrays_to_candidate(@candidate, params, position_type, false) # TODO: need refactoring
+    add_arrays_to_candidate(@candidate, params, position_type, @candidate.active) # TODO: need refactoring
 
     if @candidate.save
       @message_success = if user_signed_in?
