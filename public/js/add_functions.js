@@ -178,14 +178,14 @@ function add_experience_table_row(position_type=""){
         rowElement.innerHTML =
             '<div class="form-group col-md-2">' +
             '   <label for="expieience' + String(count) + 'Name">Название организации(' + String(count + 1) + ')</label>' +
+            '</div>' + 
+            '<div class="form-group col-md-9">' +
+            '   <input class="form-control" type="text" id="experience_' + String(count) + '_name" name="experience[' + String(count) + '][name]">' +
             '</div>' +
             '<div class="form-group col-md-1">' +
             '   <a class="delete" title="Удалить" data-toggle="tooltip">' + 
             '       <i class="material-icons" style="color:red"></i>' + 
             '   </a>' +
-            '</div>' + 
-            '<div class="form-group col-md-9">' +
-            '   <input class="form-control" type="text" id="experience_' + String(count) + '_name" name="experience[' + String(count) + '][name]">' +
             '</div>';
 
         tableBody.appendChild(rowElement);
