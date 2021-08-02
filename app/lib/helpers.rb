@@ -93,11 +93,14 @@ module Helpers
   def add_arrays_to_candidate(candidate, params, type, always_save)
     tables_names(type).each do |table_name, ver_fields|
       arr = []
+      do_not_add = false
       params.select { |key| key == table_name }.each_value do |table|
         table.each_value do |row|
-          arr << row unless do_not_add(row, ver_fields) && !always_save
+          do_not_add = do_not_add(row, ver_fields) || do_not_add
+          arr << row
         end
       end
+      arr = [] if do_not_add && !always_save
       candidate[table_name] = arr
     end
   end

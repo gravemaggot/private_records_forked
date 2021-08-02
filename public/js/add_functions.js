@@ -176,9 +176,14 @@ function add_experience_table_row(position_type=""){
         rowElement.classList.add("form-row");
 
         rowElement.innerHTML =
-            '<div class="form-group col-md-3">' +
+            '<div class="form-group col-md-2">' +
             '   <label for="expieience' + String(count) + 'Name">Название организации(' + String(count + 1) + ')</label>' +
             '</div>' +
+            '<div class="form-group col-md-1">' +
+            '   <a class="delete" title="Удалить" data-toggle="tooltip">' + 
+            '       <i class="material-icons" style="color:red"></i>' + 
+            '   </a>' +
+            '</div>' + 
             '<div class="form-group col-md-9">' +
             '   <input class="form-control" type="text" id="experience_' + String(count) + '_name" name="experience[' + String(count) + '][name]">' +
             '</div>';
@@ -500,6 +505,33 @@ function fill_experience_content(contentElement, position_type){
             rowsElement.childNodes[rowsElement.childNodes.length-2].childNodes[3].childNodes[1].value = rowData["dism"]
         }
         rowsElement.childNodes[rowsElement.childNodes.length-1].childNodes[0].childNodes[1].value = rowData["duties"]
+    }
+
+    set_delete_events()
+}
+
+function remove_expirience_row(num){
+    rowsElement = document.getElementById("experience_fields")    
+    for (i=1; i<=6; i++){
+        rowsElement.removeChild(rowsElement.childNodes[(num+1)*6-i])    
+    }
+
+    set_delete_events()
+}
+
+function set_delete_events(){
+    rowsElement = document.getElementById("experience_fields")
+    iconsList = rowsElement.querySelectorAll("a")
+    for (i=0; i < iconsList.length; i++){
+        iconsList[i].childNodes[1].onclick = get_delete_function(i)
+    }
+
+    return (false)
+}
+
+function get_delete_function(i){
+    return function(){
+        remove_expirience_row(i)    
     }
 }
 
