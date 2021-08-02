@@ -85,7 +85,7 @@ module Helpers
       error_texts << error_text
       fldsnms << k
     end
-    error_texts[0] unless error_texts.empty?
+    error_texts.join('<br>') unless error_texts.empty?
   end
 
   # fill by params
