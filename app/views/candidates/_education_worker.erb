@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="table_content" id="education_content" hidden><%= @candidate[:education].to_json %></div>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="candidate_education">
           <thead>
           <tr>
             <th style="width: 16%">Год поступления</th>
@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="table_content" id="extra_content" hidden><%= @candidate[:extra].to_json %></div>
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="candidate_extra">
           <thead>
           <tr>
           <th style="width: 12%">Год обучения</th>

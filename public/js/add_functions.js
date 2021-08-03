@@ -559,6 +559,11 @@ function add_validation_tags(validate_fields){
             }else if (el.className.indexOf("input-group-prepend") > -1){
                 el.parentElement.parentElement.parentElement.querySelectorAll("label")[0].style = "color:#dc3545"
                 el.style = "color:#dc3545"
+            }else if(fields[i] == "desired_pay_system"){
+                sel = el.querySelectorAll("label")
+                for (sel_i in sel){
+                    sel[sel_i].style = "color:#dc3545"
+                }
             }else{
                 el.setAttribute('required', '')
             }
