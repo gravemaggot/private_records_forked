@@ -603,20 +603,30 @@ function switch_pills_on_last_field(validate_fields){
 }
 
 function pills_cathegory(fieldname){
-    cathegory_hash = {
-        "first_name"                  : '#pills-tab li:nth-child(1) a',
-        "last_name"                   : '#pills-tab li:nth-child(1) a',
-        "email"                       : '#pills-tab li:nth-child(1) a',    
-        "date"                        : '#pills-tab li:nth-child(1) a',    
-        "phone"                       : '#pills-tab li:nth-child(1) a',    
-        "relatives"                   : '#pills-tab li:nth-child(1) a',    
-        "experience"                  : '#pills-tab li:nth-child(4) a',    
-        "data_verification"           : '#pills-tab li:nth-child(5) a',    
-        "last_average_monthly_income" : '#pills-tab li:nth-child(5) a',    
-        "overtime_work"               : '#pills-tab li:nth-child(5) a',    
-        "business_trips"              : '#pills-tab li:nth-child(5) a',    
-        "training"                    : '#pills-tab li:nth-child(5) a',    
-        "ready_to_start_work"         : '#pills-tab li:nth-child(5) a'    
+    cathegory_hash = {      
+        "education"                             : '#pills-tab li:nth-child(2) a',    
+        "language"                              : '#pills-tab li:nth-child(3) a',    
+        "word_level"                            : '#pills-tab li:nth-child(3) a',    
+        "excel_level"                           : '#pills-tab li:nth-child(3) a',    
+        "access_level"                          : '#pills-tab li:nth-child(3) a',    
+        "_1c_level"                             : '#pills-tab li:nth-child(3) a',    
+        "experience"                            : '#pills-tab li:nth-child(4) a',    
+        "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',    
+        "bad_habits"                            : '#pills-tab li:nth-child(5) a',    
+        "health_status"                         : '#pills-tab li:nth-child(5) a',    
+        "previous_conviction"                   : '#pills-tab li:nth-child(5) a',    
+        "administrative_penalties"              : '#pills-tab li:nth-child(5) a',    
+        "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(5) a',    
+        "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(5) a',    
+        "job_data_source"                       : '#pills-tab li:nth-child(5) a',    
+        "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',    
+        "data_verification"                     : '#pills-tab li:nth-child(5) a',    
+        "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',    
+        "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',    
+        "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',    
+        "overtime_work"                         : '#pills-tab li:nth-child(5) a',    
+        "business_trips"                        : '#pills-tab li:nth-child(5) a',    
+        "training"                              : '#pills-tab li:nth-child(5) a'    
     }
 
     cathegory = cathegory_hash[fieldname]
