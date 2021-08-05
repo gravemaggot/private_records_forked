@@ -564,9 +564,8 @@ function add_validation_tags(validate_fields){
                 for (sel_i in sel){
                     sel[sel_i].style = "color:#dc3545"
                 }
-            }else{
-                el.setAttribute('required', '')
             }
+            el.setAttribute('required', '')
         }else if(fields[i] == "experience"){
             el = document.getElementById("experience_fields") 
             set_required_for_fields(el, ["input", "textarea"])
@@ -574,7 +573,7 @@ function add_validation_tags(validate_fields){
     }
 }
 
-function set_required_for_fields(table_el, types){
+ function set_required_for_fields(table_el, types){
     for (typeI in types) { 
         selectType = types[typeI]
         inputSelector = table_el.querySelectorAll(selectType);
@@ -600,34 +599,60 @@ function switch_pills_on_last_field(validate_fields){
 
     fieldname = fields[0]
     $(pills_cathegory(fieldname)).tab('show')
+
+    el = document.getElementById("candidate_"+fieldname)
+
+    if (el) {
+        if (el.className.indexOf("table table-") > -1){
+            inputSelector = el.querySelectorAll("input");
+            if (inputSelector.length > 0){
+                inputSelector[0].focus()    
+            }
+        }else{
+            el.focus()    
+        }
+    }
 }
 
 function pills_cathegory(fieldname){
-    cathegory_hash = {      
-        "education"                             : '#pills-tab li:nth-child(2) a',    
-        "language"                              : '#pills-tab li:nth-child(3) a',    
-        "word_level"                            : '#pills-tab li:nth-child(3) a',    
-        "excel_level"                           : '#pills-tab li:nth-child(3) a',    
-        "access_level"                          : '#pills-tab li:nth-child(3) a',    
-        "_1c_level"                             : '#pills-tab li:nth-child(3) a',    
-        "experience"                            : '#pills-tab li:nth-child(4) a',    
-        "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',    
-        "bad_habits"                            : '#pills-tab li:nth-child(5) a',    
-        "health_status"                         : '#pills-tab li:nth-child(5) a',    
-        "previous_conviction"                   : '#pills-tab li:nth-child(5) a',    
-        "administrative_penalties"              : '#pills-tab li:nth-child(5) a',    
-        "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(5) a',    
-        "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(5) a',    
-        "job_data_source"                       : '#pills-tab li:nth-child(5) a',    
-        "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',    
-        "data_verification"                     : '#pills-tab li:nth-child(5) a',    
-        "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',    
-        "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',    
-        "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',    
-        "overtime_work"                         : '#pills-tab li:nth-child(5) a',    
-        "business_trips"                        : '#pills-tab li:nth-child(5) a',    
-        "training"                              : '#pills-tab li:nth-child(5) a'    
-    }
+    if (document.getElementById("is_worker") == null){
+        cathegory_hash = {      
+            "education"                             : '#pills-tab li:nth-child(2) a',    
+            "language"                              : '#pills-tab li:nth-child(3) a',    
+            "word_level"                            : '#pills-tab li:nth-child(3) a',    
+            "excel_level"                           : '#pills-tab li:nth-child(3) a',    
+            "access_level"                          : '#pills-tab li:nth-child(3) a',    
+            "_1c_level"                             : '#pills-tab li:nth-child(3) a',    
+            "experience"                            : '#pills-tab li:nth-child(4) a',    
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',    
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',    
+            "data_verification"                     : '#pills-tab li:nth-child(5) a',    
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',    
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',    
+            "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',    
+            "overtime_work"                         : '#pills-tab li:nth-child(5) a',    
+            "business_trips"                        : '#pills-tab li:nth-child(5) a',    
+            "training"                              : '#pills-tab li:nth-child(5) a'    
+        }
+    }else{
+        cathegory_hash = {
+            "education"                             : '#pills-tab li:nth-child(2) a',
+            "experience"                            : '#pills-tab li:nth-child(3) a',
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(4) a',
+            "bad_habits"                            : '#pills-tab li:nth-child(4) a',
+            "health_status"                         : '#pills-tab li:nth-child(4) a',
+            "previous_conviction"                   : '#pills-tab li:nth-child(4) a',
+            "administrative_penalties"              : '#pills-tab li:nth-child(4) a',
+            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(4) a',
+            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(4) a',
+            "job_data_source"                       : '#pills-tab li:nth-child(4) a',
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(4) a',
+            "data_verification"                     : '#pills-tab li:nth-child(4) a',
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(4) a',
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(4) a',
+            "desired_pay_system"                    : '#pills-tab li:nth-child(4) a',
+            }
+        }
 
     cathegory = cathegory_hash[fieldname]
     if (cathegory == null){
@@ -636,3 +661,31 @@ function pills_cathegory(fieldname){
 
     return (cathegory)
 }
+
+function get_requred_inputs(){
+    arr = []
+    requiredEls = $('[required]')
+    for (i = 0; i < requiredEls.length; i++){
+        el = requiredEls[i]
+        fieldname = el.id.substring("candidate_".length)
+        if (el.value == ''){
+            arr[arr.length] = { "name": fieldname, "page": pills_cathegory(fieldname)}
+        }
+    }
+    return arr
+}
+
+function focus_on_required_input_not_this_page(){
+    if (get_requred_inputs().length > 0){
+        
+        return false
+    }
+
+    return true
+}
+
+function save_data(){
+    document.getElementsByTagName("form")[0].submit()    
+}
+
+// form.submit()
