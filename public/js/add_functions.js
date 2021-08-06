@@ -586,7 +586,7 @@ function add_validation_tags(validate_fields){
     }  
 }
 
-function switch_pills_on_last_field(validate_fields){
+function switch_pills_on_last_field_and_focus(validate_fields){
     if (validate_fields == null){
         return
     }
@@ -602,15 +602,55 @@ function switch_pills_on_last_field(validate_fields){
 
     el = document.getElementById("candidate_"+fieldname)
 
+    position_type = ""
+    if (document.getElementById("is_worker") != null){
+        position_type = "worker"
+    }
+
+    let focusedElement
+
     if (el) {
-        if (el.className.indexOf("table table-") > -1){
-            inputSelector = el.querySelectorAll("input");
-            if (inputSelector.length > 0){
-                inputSelector[0].focus()    
+        if (el.className.indexOf("table table-") > -1 && el.id == "candidate_experience"){
+            inputSelector = el.querySelectorAll("input")
+            if (inputSelector.length == 0){
+                add_new_row_to_tab(el.id, position_type)               
             }
+            inputSelector = el.querySelectorAll("input")
+            focusedElement = inputSelector[0]
         }else{
-            el.focus()    
+            focusedElement = el    
         }
+    }
+
+    if (focusedElement){
+        focusedElement.focus() 
+        
+        invalidTooltip = document.createElement("div")
+        invalidTooltip.className = "invalid-tooltip"
+        invalidTooltip.innerText = "Заполните это поле"
+
+        nextEl = focusedElement.nextElementSibling
+        if (nextEl != null){
+            focusedElement.parentElement.insertBefore(invalidTooltip, nextEl)    
+        }else{
+            focusedElement.parentElement.appendChild(invalidTooltip)    
+        }
+    }
+}
+
+function add_new_row_to_tab(id, position_type) {
+    methodsForTabs = {
+        "candidate_experience"      : add_experience_table_row,
+        "candidate_relatives"       : add_relatives_table_new_row,
+        "candidate_education"       : add_education_table_new_row,
+        "candidate_extra"           : add_extra_table_new_row,
+        "candidate_language"        : add_language_table_new_row,
+        "candidate_reccomenders"    : add_reccomenders_table_row,
+    }
+
+    method = methodsForTabs[id]
+    if (method){
+        method.call(this, position_type)
     }
 }
 
@@ -677,15 +717,11 @@ function get_requred_inputs(){
 
 function focus_on_required_input_not_this_page(){
     if (get_requred_inputs().length > 0){
-        
         return false
     }
-
     return true
 }
 
 function save_data(){
     document.getElementsByTagName("form")[0].submit()    
 }
-
-// form.submit()
