@@ -564,9 +564,8 @@ function add_validation_tags(validate_fields){
                 for (sel_i in sel){
                     sel[sel_i].style = "color:#dc3545"
                 }
-            }else{
-                el.setAttribute('required', '')
             }
+            el.setAttribute('required', '')
         }else if(fields[i] == "experience"){
             el = document.getElementById("experience_fields") 
             set_required_for_fields(el, ["input", "textarea"])
@@ -574,7 +573,7 @@ function add_validation_tags(validate_fields){
     }
 }
 
-function set_required_for_fields(table_el, types){
+ function set_required_for_fields(table_el, types){
     for (typeI in types) { 
         selectType = types[typeI]
         inputSelector = table_el.querySelectorAll(selectType);
@@ -587,37 +586,169 @@ function set_required_for_fields(table_el, types){
     }  
 }
 
-function switch_pills_on_last_field(validate_fields){
+function switch_pills_on_last_field_and_focus(validate_fields, for_current = false){
     if (validate_fields == null){
-        return
+        return false
     }
 
-    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
-
-    if (fields.length == 0){
-        return
+    position_type = ""
+    if (document.getElementById("is_worker") != null){
+        position_type = "worker"
     }
 
-    fieldname = fields[0]
+    fieldname = get_first_by_pills(validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", "), for_current, position_type)
+    if (fieldname == null){
+        return false
+    }
+    
     $(pills_cathegory(fieldname)).tab('show')
+
+    el = document.getElementById("candidate_"+fieldname)
+
+    let focusedElement
+
+    if (el) {
+        if (el.className.indexOf("table table-") > -1 || el.id == "candidate_experience"){
+            inputSelector = el.querySelectorAll("input")
+            if (inputSelector.length == 0){
+                add_new_row_to_tab(el.id, position_type)
+                set_required_for_fields(el, ["input", "text"])               
+            }
+            inputSelector = el.querySelectorAll("input")
+            focusedElement = inputSelector[0]
+        }else{
+            focusedElement = el    
+        }
+    }
+
+    if (focusedElement){        
+        nextEl = focusedElement.nextElementSibling
+        if (nextEl != null){
+            if (nextEl.className != "invalid-tooltip"){
+                focusedElement.parentElement.insertBefore(get_div_element_invalid_tooltip(), nextEl)    
+            }
+        }else{
+            focusedElement.parentElement.appendChild(get_div_element_invalid_tooltip())    
+        }
+        setTimeout(function(){focusedElement.focus()}, 1000) 
+    }
+
+    return true
+}
+
+function get_div_element_invalid_tooltip(){
+    invalidTooltip = document.createElement("div")
+    invalidTooltip.className = "invalid-tooltip"
+    invalidTooltip.innerText = "Заполните это поле"
+
+    return invalidTooltip
+}
+
+function add_new_row_to_tab(id, position_type) {
+    methodsForTabs = {
+        "candidate_experience"      : add_experience_table_row,
+        "candidate_relatives"       : add_relatives_table_new_row,
+        "candidate_education"       : add_education_table_new_row,
+        "candidate_extra"           : add_extra_table_new_row,
+        "candidate_language"        : add_language_table_new_row,
+        "candidate_reccomenders"    : add_reccomenders_table_row,
+    }
+
+    method = methodsForTabs[id]
+    if (method){
+        method.call(this, position_type)
+    }
+}
+
+function get_first_by_pills(fields, for_current = false, position_type = ""){
+    if (for_current){
+        have_pills = [get_tab_pill_for_current_tab(position_type)]
+    }else{
+        have_pills = []
+        for (i in fields){
+            fieldname = fields[i]
+            cathegory = pills_cathegory(fieldname)
+            if (have_pills.indexOf(cathegory) == -1) {
+                have_pills[have_pills.length] = cathegory 
+            }  
+        }
+    }
+
+    have_pills.sort() 
+
+    for (i in fields){
+        fieldname = fields[i]
+        if (pills_cathegory(fieldname) == have_pills[0]){
+            return fieldname
+        }
+    } 
+}
+
+function get_tab_pill_for_current_tab(position_type){
+
+    current_tab = document.getElementsByClassName("tab-pane fade active show")[0].id
+
+    if (position_type != "worker"){
+        pills_hash = {
+            "pills-general-information"     : "#pills-tab li:nth-child(1) a",
+            "pills-education"               : "#pills-tab li:nth-child(2) a",
+            "pills-skills"                  : "#pills-tab li:nth-child(3) a",
+            "pills-experience"              : "#pills-tab li:nth-child(4) a",
+            "pills-recommendations"         : "#pills-tab li:nth-child(5) a",
+            "pills-additional-information"  : "#pills-tab li:nth-child(6) a"
+        }
+    }else{
+        pills_hash = {
+            "pills-general-information"     : "#pills-tab li:nth-child(1) a",
+            "pills-education"               : "#pills-tab li:nth-child(2) a",
+            "pills-experience"              : "#pills-tab li:nth-child(3) a",
+            "pills-recommendations"         : "#pills-tab li:nth-child(4) a",
+            "pills-additional-information"  : "#pills-tab li:nth-child(5) a"
+        }
+    }
+
+    return pills_hash[current_tab]
 }
 
 function pills_cathegory(fieldname){
-    cathegory_hash = {
-        "first_name"                  : '#pills-tab li:nth-child(1) a',
-        "last_name"                   : '#pills-tab li:nth-child(1) a',
-        "email"                       : '#pills-tab li:nth-child(1) a',    
-        "date"                        : '#pills-tab li:nth-child(1) a',    
-        "phone"                       : '#pills-tab li:nth-child(1) a',    
-        "relatives"                   : '#pills-tab li:nth-child(1) a',    
-        "experience"                  : '#pills-tab li:nth-child(4) a',    
-        "data_verification"           : '#pills-tab li:nth-child(5) a',    
-        "last_average_monthly_income" : '#pills-tab li:nth-child(5) a',    
-        "overtime_work"               : '#pills-tab li:nth-child(5) a',    
-        "business_trips"              : '#pills-tab li:nth-child(5) a',    
-        "training"                    : '#pills-tab li:nth-child(5) a',    
-        "ready_to_start_work"         : '#pills-tab li:nth-child(5) a'    
-    }
+    if (document.getElementById("is_worker") == null){
+        cathegory_hash = {      
+            "education"                             : '#pills-tab li:nth-child(2) a',    
+            "language"                              : '#pills-tab li:nth-child(3) a',    
+            "word_level"                            : '#pills-tab li:nth-child(3) a',    
+            "excel_level"                           : '#pills-tab li:nth-child(3) a',    
+            "access_level"                          : '#pills-tab li:nth-child(3) a',    
+            "_1c_level"                             : '#pills-tab li:nth-child(3) a',    
+            "experience"                            : '#pills-tab li:nth-child(4) a',    
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(6) a',    
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(6) a',    
+            "data_verification"                     : '#pills-tab li:nth-child(6) a',    
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(6) a',    
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(6) a',    
+            "desired_pay_system"                    : '#pills-tab li:nth-child(6) a',    
+            "overtime_work"                         : '#pills-tab li:nth-child(6) a',    
+            "business_trips"                        : '#pills-tab li:nth-child(6) a',    
+            "training"                              : '#pills-tab li:nth-child(6) a'    
+        }
+    }else{
+        cathegory_hash = {
+            "education"                             : '#pills-tab li:nth-child(3) a',
+            "experience"                            : '#pills-tab li:nth-child(4) a',
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',
+            "bad_habits"                            : '#pills-tab li:nth-child(5) a',
+            "health_status"                         : '#pills-tab li:nth-child(5) a',
+            "previous_conviction"                   : '#pills-tab li:nth-child(5) a',
+            "administrative_penalties"              : '#pills-tab li:nth-child(5) a',
+            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(5) a',
+            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(5) a',
+            "job_data_source"                       : '#pills-tab li:nth-child(5) a',
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',
+            "data_verification"                     : '#pills-tab li:nth-child(5) a',
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',
+            "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',
+            }
+        }
 
     cathegory = cathegory_hash[fieldname]
     if (cathegory == null){
@@ -625,4 +756,62 @@ function pills_cathegory(fieldname){
     }
 
     return (cathegory)
+}
+
+function get_requred_inputs(){
+    arr = []
+    requiredEls = $('[required]')
+    for (i = 0; i < requiredEls.length; i++){
+        el = requiredEls[i]
+        fieldname = el.id.substring("candidate_".length)
+        if (el.value == ''){
+            arr[arr.length] = { "name": fieldname, "page": pills_cathegory(fieldname)}
+        }
+    }
+    return arr
+}
+
+function focus_on_required_input_not_this_page(){
+    if (get_requred_inputs().length > 0){
+        return false
+    }
+    return true
+}
+
+function save_data(){
+    document.getElementsByTagName("form")[0].submit()    
+}
+
+function switch_to_next_pill_and_validate(){
+    if (document.getElementsByTagName("form")[0].className == "was-validated" 
+        && switch_pills_on_last_field_and_focus(document.getElementById("validate_fields"), true)){
+        return false
+    }
+
+    nextTabNavi = get_next_tab_for_current_page()
+    if (nextTabNavi){
+        $(nextTabNavi).tab('show')
+    }
+
+    return false
+}
+
+function get_next_tab_for_current_page(){
+    positionType = ""
+    if (document.getElementById("is_worker") != null){
+        positionType = "worker"
+    }
+
+    pillsPage = get_tab_pill_for_current_tab(positionType)
+    if (!pillsPage){
+        return
+    }
+
+    pillsNumber = +/\d+/.exec(pillsPage)
+    if (pillsNumber > 5){
+        return
+    }
+
+    nextPillPage = pillsPage.replace(pillsNumber, pillsNumber + 1)
+    return nextPillPage
 }
