@@ -588,7 +588,7 @@ function add_validation_tags(validate_fields){
 
 function switch_pills_on_last_field_and_focus(validate_fields, for_current = false){
     if (validate_fields == null){
-        return
+        return false
     }
 
     position_type = ""
@@ -598,12 +598,14 @@ function switch_pills_on_last_field_and_focus(validate_fields, for_current = fal
 
     fieldname = get_first_by_pills(validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", "), for_current, position_type)
     if (fieldname == null){
-        return
+        return false
     }
     
     $(pills_cathegory(fieldname)).tab('show')
 
     el = document.getElementById("candidate_"+fieldname)
+
+    let focusedElement
 
     if (el) {
         if (el.className.indexOf("table table-") > -1 || el.id == "candidate_experience"){
@@ -628,8 +630,10 @@ function switch_pills_on_last_field_and_focus(validate_fields, for_current = fal
         }else{
             focusedElement.parentElement.appendChild(get_div_element_invalid_tooltip())    
         }
-        focusedElement.focus() 
+        setTimeout(function(){focusedElement.focus()}, 1000) 
     }
+
+    return true
 }
 
 function get_div_element_invalid_tooltip(){
@@ -776,4 +780,38 @@ function focus_on_required_input_not_this_page(){
 
 function save_data(){
     document.getElementsByTagName("form")[0].submit()    
+}
+
+function switch_to_next_pill_and_validate(){
+    if (document.getElementsByTagName("form")[0].className == "was-validated" 
+        && switch_pills_on_last_field_and_focus(document.getElementById("validate_fields"), true)){
+        return false
+    }
+
+    nextTabNavi = get_next_tab_for_current_page()
+    if (nextTabNavi){
+        $(nextTabNavi).tab('show')
+    }
+
+    return false
+}
+
+function get_next_tab_for_current_page(){
+    positionType = ""
+    if (document.getElementById("is_worker") != null){
+        positionType = "worker"
+    }
+
+    pillsPage = get_tab_pill_for_current_tab(positionType)
+    if (!pillsPage){
+        return
+    }
+
+    pillsNumber = +/\d+/.exec(pillsPage)
+    if (pillsNumber > 5){
+        return
+    }
+
+    nextPillPage = pillsPage.replace(pillsNumber, pillsNumber + 1)
+    return nextPillPage
 }
