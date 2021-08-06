@@ -586,34 +586,31 @@ function add_validation_tags(validate_fields){
     }  
 }
 
-function switch_pills_on_last_field_and_focus(validate_fields){
+function switch_pills_on_last_field_and_focus(validate_fields, for_current = false){
     if (validate_fields == null){
         return
     }
-
-    fields = validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", ")
-
-    if (fields.length == 0){
-        return
-    }
-
-    fieldname = fields[0]
-    $(pills_cathegory(fieldname)).tab('show')
-
-    el = document.getElementById("candidate_"+fieldname)
 
     position_type = ""
     if (document.getElementById("is_worker") != null){
         position_type = "worker"
     }
 
-    let focusedElement
+    fieldname = get_first_by_pills(validate_fields.value.replace(/\:/g,'').replace(/\[/g,'').replace(/\]/g,'').split(", "), for_current, position_type)
+    if (fieldname == null){
+        return
+    }
+    
+    $(pills_cathegory(fieldname)).tab('show')
+
+    el = document.getElementById("candidate_"+fieldname)
 
     if (el) {
-        if (el.className.indexOf("table table-") > -1 && el.id == "candidate_experience"){
+        if (el.className.indexOf("table table-") > -1 || el.id == "candidate_experience"){
             inputSelector = el.querySelectorAll("input")
             if (inputSelector.length == 0){
-                add_new_row_to_tab(el.id, position_type)               
+                add_new_row_to_tab(el.id, position_type)
+                set_required_for_fields(el, ["input", "text"])               
             }
             inputSelector = el.querySelectorAll("input")
             focusedElement = inputSelector[0]
@@ -622,20 +619,25 @@ function switch_pills_on_last_field_and_focus(validate_fields){
         }
     }
 
-    if (focusedElement){
-        focusedElement.focus() 
-        
-        invalidTooltip = document.createElement("div")
-        invalidTooltip.className = "invalid-tooltip"
-        invalidTooltip.innerText = "Заполните это поле"
-
+    if (focusedElement){        
         nextEl = focusedElement.nextElementSibling
         if (nextEl != null){
-            focusedElement.parentElement.insertBefore(invalidTooltip, nextEl)    
+            if (nextEl.className != "invalid-tooltip"){
+                focusedElement.parentElement.insertBefore(get_div_element_invalid_tooltip(), nextEl)    
+            }
         }else{
-            focusedElement.parentElement.appendChild(invalidTooltip)    
+            focusedElement.parentElement.appendChild(get_div_element_invalid_tooltip())    
         }
+        focusedElement.focus() 
     }
+}
+
+function get_div_element_invalid_tooltip(){
+    invalidTooltip = document.createElement("div")
+    invalidTooltip.className = "invalid-tooltip"
+    invalidTooltip.innerText = "Заполните это поле"
+
+    return invalidTooltip
 }
 
 function add_new_row_to_tab(id, position_type) {
@@ -654,6 +656,56 @@ function add_new_row_to_tab(id, position_type) {
     }
 }
 
+function get_first_by_pills(fields, for_current = false, position_type = ""){
+    if (for_current){
+        have_pills = [get_tab_pill_for_current_tab(position_type)]
+    }else{
+        have_pills = []
+        for (i in fields){
+            fieldname = fields[i]
+            cathegory = pills_cathegory(fieldname)
+            if (have_pills.indexOf(cathegory) == -1) {
+                have_pills[have_pills.length] = cathegory 
+            }  
+        }
+    }
+
+    have_pills.sort() 
+
+    for (i in fields){
+        fieldname = fields[i]
+        if (pills_cathegory(fieldname) == have_pills[0]){
+            return fieldname
+        }
+    } 
+}
+
+function get_tab_pill_for_current_tab(position_type){
+
+    current_tab = document.getElementsByClassName("tab-pane fade active show")[0].id
+
+    if (position_type != "worker"){
+        pills_hash = {
+            "pills-general-information"     : "#pills-tab li:nth-child(1) a",
+            "pills-education"               : "#pills-tab li:nth-child(2) a",
+            "pills-skills"                  : "#pills-tab li:nth-child(3) a",
+            "pills-experience"              : "#pills-tab li:nth-child(4) a",
+            "pills-recommendations"         : "#pills-tab li:nth-child(5) a",
+            "pills-additional-information"  : "#pills-tab li:nth-child(6) a"
+        }
+    }else{
+        pills_hash = {
+            "pills-general-information"     : "#pills-tab li:nth-child(1) a",
+            "pills-education"               : "#pills-tab li:nth-child(2) a",
+            "pills-experience"              : "#pills-tab li:nth-child(3) a",
+            "pills-recommendations"         : "#pills-tab li:nth-child(4) a",
+            "pills-additional-information"  : "#pills-tab li:nth-child(5) a"
+        }
+    }
+
+    return pills_hash[current_tab]
+}
+
 function pills_cathegory(fieldname){
     if (document.getElementById("is_worker") == null){
         cathegory_hash = {      
@@ -664,33 +716,33 @@ function pills_cathegory(fieldname){
             "access_level"                          : '#pills-tab li:nth-child(3) a',    
             "_1c_level"                             : '#pills-tab li:nth-child(3) a',    
             "experience"                            : '#pills-tab li:nth-child(4) a',    
-            "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',    
-            "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',    
-            "data_verification"                     : '#pills-tab li:nth-child(5) a',    
-            "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',    
-            "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',    
-            "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',    
-            "overtime_work"                         : '#pills-tab li:nth-child(5) a',    
-            "business_trips"                        : '#pills-tab li:nth-child(5) a',    
-            "training"                              : '#pills-tab li:nth-child(5) a'    
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(6) a',    
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(6) a',    
+            "data_verification"                     : '#pills-tab li:nth-child(6) a',    
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(6) a',    
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(6) a',    
+            "desired_pay_system"                    : '#pills-tab li:nth-child(6) a',    
+            "overtime_work"                         : '#pills-tab li:nth-child(6) a',    
+            "business_trips"                        : '#pills-tab li:nth-child(6) a',    
+            "training"                              : '#pills-tab li:nth-child(6) a'    
         }
     }else{
         cathegory_hash = {
-            "education"                             : '#pills-tab li:nth-child(2) a',
-            "experience"                            : '#pills-tab li:nth-child(3) a',
-            "ready_to_start_work"                   : '#pills-tab li:nth-child(4) a',
-            "bad_habits"                            : '#pills-tab li:nth-child(4) a',
-            "health_status"                         : '#pills-tab li:nth-child(4) a',
-            "previous_conviction"                   : '#pills-tab li:nth-child(4) a',
-            "administrative_penalties"              : '#pills-tab li:nth-child(4) a',
-            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(4) a',
-            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(4) a',
-            "job_data_source"                       : '#pills-tab li:nth-child(4) a',
-            "last_average_monthly_income"           : '#pills-tab li:nth-child(4) a',
-            "data_verification"                     : '#pills-tab li:nth-child(4) a',
-            "trial_period_salaries"                 : '#pills-tab li:nth-child(4) a',
-            "post_trial_salaries"                   : '#pills-tab li:nth-child(4) a',
-            "desired_pay_system"                    : '#pills-tab li:nth-child(4) a',
+            "education"                             : '#pills-tab li:nth-child(3) a',
+            "experience"                            : '#pills-tab li:nth-child(4) a',
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',
+            "bad_habits"                            : '#pills-tab li:nth-child(5) a',
+            "health_status"                         : '#pills-tab li:nth-child(5) a',
+            "previous_conviction"                   : '#pills-tab li:nth-child(5) a',
+            "administrative_penalties"              : '#pills-tab li:nth-child(5) a',
+            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(5) a',
+            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(5) a',
+            "job_data_source"                       : '#pills-tab li:nth-child(5) a',
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',
+            "data_verification"                     : '#pills-tab li:nth-child(5) a',
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',
+            "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',
             }
         }
 
