@@ -100,7 +100,7 @@
       </div>
 
       <div class="form-group col-md-6" id="candidate_desired_pay_system">
-        <h6>Желаемая система оплаты труда (выберите 1 - 2 варианта)</h6>
+        <h6>Желаемая система оплаты труда (выберите 1 - 2 варианта) *</h6>
         <% @desired_pay_system.each do |key, value| %>
           <div class="form-check">
             <input type="checkbox" class="form-check-input" id=<%= "candidate_#{key}" %>
@@ -123,7 +123,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label for="CandidateOvertimeWork">Сверхурочную работу</label>
+        <label for="CandidateOvertimeWork">Сверхурочную работу *</label>
       </div>
       <div class="form-group col-md-9">
         <div class="input-group">
@@ -139,7 +139,7 @@
     </div>
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label for="CandidateBusinessTrips">Командировки</label>
+        <label for="CandidateBusinessTrips">Командировки *</label>
       </div>
       <div class="form-group col-md-9">
         <div class="input-group">
@@ -155,7 +155,7 @@
     </div>
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label for="CandidateTraining">Обучение</label>
+        <label for="CandidateTraining">Обучение *</label>
       </div>
       <div class="form-group col-md-9">
         <div class="input-group">
@@ -172,7 +172,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="CandidateReadyToStartWork">Когда Вы готовы приступить к работе?</label>
+        <label for="CandidateReadyToStartWork">Когда Вы готовы приступить к работе *?</label>
       </div>
       <div class="form-group col-md-2">
         <input class="form-control" type="date" name="candidate[ready_to_start_work]" id="candidate_ready_to_start_work" value="<%= @candidate.ready_to_start_work%>">
