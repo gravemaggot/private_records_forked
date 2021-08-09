@@ -177,7 +177,7 @@ function add_experience_table_row(position_type=""){
 
         rowElement.innerHTML =
             '<div class="form-group col-md-2">' +
-            '   <label for="expieience' + String(count) + 'Name">Название организации(' + String(count + 1) + ')</label>' +
+            '   <label for="expieience' + String(count) + 'Name">Название организации(' + String(count + 1) + ') *</label>' +
             '</div>' + 
             '<div class="form-group col-md-9">' +
             '   <input class="form-control" type="text" id="experience_' + String(count) + '_name" name="experience[' + String(count) + '][name]">' +
@@ -196,13 +196,13 @@ function add_experience_table_row(position_type=""){
         if (position_type == "worker"){
             rowElement.innerHTML =
                 '<div class="form-group col-md-3">' +
-                '   <label for="expieience1PeriodStart">Период работы c (можно первое число месяца и года)</label>' +
+                '   <label for="expieience1PeriodStart">Период работы c (можно первое число месяца и года) *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
                 '   <input class="form-control" type="date" id="experience_' + String(count) + '_period_start" name="experience['+ String(count) + '][period_start]">' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
-                '   <label for="expieience' + String(count) + 'PeriodFinish">по</label>' +
+                '   <label for="expieience' + String(count) + 'PeriodFinish">по *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
                 '   <input class="form-control" type="date" id="experience_' + String(count) + '_period_finish" name="experience['+ String(count) + '][period_finish]">' +
@@ -210,25 +210,25 @@ function add_experience_table_row(position_type=""){
         }else{
             rowElement.innerHTML =
                 '<div class="form-row"><div class="form-group col-md-3">' +
-                '   <label for="expieience1PeriodStart">Период работы c (можно первое число месяца и года)</label>' +
+                '   <label for="expieience1PeriodStart">Период работы c (можно первое число месяца и года) *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
                 '   <input class="form-control" type="date" id="experience_' + String(count) + '_period_start" name="experience['+ String(count) + '][period_start]">' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
-                '   <label for="expieience' + String(count) + 'PeriodFinish">по</label>' +
+                '   <label for="expieience' + String(count) + 'PeriodFinish">по *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
                 '   <input class="form-control" type="date" id="experience_' + String(count) + '_period_finish" name="experience['+ String(count) + '][period_finish]">' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
-                '   <label for="expieience' + String(count) + 'Workers">сотруд-\nников</label>' +
+                '   <label for="expieience' + String(count) + 'Workers">сотруд-\nников *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
                 '   <input class="form-control" type="number" id="experience_' + String(count) + '_workers" name="experience['+ String(count) + '][workers]">' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
-                '   <label for="expieience' + String(count) + 'Subords">подчи-\nненных</label>' +
+                '   <label for="expieience' + String(count) + 'Subords">подчи-\nненных *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-1">' +
                 '   <input class="form-control" type="number" id="experience_' + String(count) + '_subords" name="experience['+ String(count) + '][subords]">' +
@@ -244,7 +244,7 @@ function add_experience_table_row(position_type=""){
         if (position_type == "worker"){
             rowElement.innerHTML =
                 '<div class="form-group col-md-3">' +
-                '   <label for="expieience' + String(count) + 'Pos">Должность</label>' +
+                '   <label for="expieience' + String(count) + 'Pos">Должность *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-9">' +
                 '   <input class="form-control" type="text" id="experience_' + String(count) + '_pos" name="experience['+ String(count) + '][pos]">' +
@@ -253,13 +253,13 @@ function add_experience_table_row(position_type=""){
         }else{
             rowElement.innerHTML =
                 '<div class="form-group col-md-3">' +
-                '   <label for="expieience' + String(count) + 'Field">Сфера деятельности</label>' +
+                '   <label for="expieience' + String(count) + 'Field">Сфера деятельности *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-3">' +
                 '   <input class="form-control" type="text" id="experience_' + String(count) + '_field" name="experience['+ String(count) + '][field]">' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
-                '   <label for="expieience' + String(count) + 'Pos">Должность</label>' +
+                '   <label for="expieience' + String(count) + 'Pos">Должность *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-4">' +
                 '   <input class="form-control" type="text" id="experience_' + String(count) + '_pos" name="experience['+ String(count) + '][pos]">' +
@@ -275,7 +275,7 @@ function add_experience_table_row(position_type=""){
         if (position_type == "worker"){
             rowElement.innerHTML =
                 '<div class="form-group col-md-3">' +
-                '   <label for="expieience' + String(count) + 'Dism">Причины увольнения</label>' +
+                '   <label for="expieience' + String(count) + 'Dism">Причины \nувольнения *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-9">' +
                 '   <input class="form-control" type="text" id="experience_' + String(count) + '_dism" name="experience['+ String(count) + '][dism]">' +
@@ -284,13 +284,13 @@ function add_experience_table_row(position_type=""){
         }else{
             rowElement.innerHTML =
                 '<div class="form-group col-md-3">' +
-                '   <label for="expieience' + String(count) + 'Cond">Зарплата</label>' +
+                '   <label for="expieience' + String(count) + 'Cond">Зарплата *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-3">' +
                 '   <input class="form-control" type="number" id="experience_' + String(count) + '_cond" name="experience['+ String(count) + '][cond]">' +
                 '</div>' +
                 '<div class="form-group col-md-2">' +
-                '   <label for="expieience' + String(count) + 'Dism">Причины увольнения</label>' +
+                '   <label for="expieience' + String(count) + 'Dism">Причины \nувольнения *</label>' +
                 '</div>' +
                 '<div class="form-group col-md-4">' +
                 '   <input class="form-control" type="text" id="experience_' + String(count) + '_dism" name="experience['+ String(count) + '][dism]">' +
@@ -304,7 +304,7 @@ function add_experience_table_row(position_type=""){
         rowElement.classList.add("form-row");
         rowElement.innerHTML =
             '<div class="form-group col-md-12">' +
-            '<label for="expieience' + String(count) + 'Duties">Основные должностные обязанности:</label>' +
+            '<label for="expieience' + String(count) + 'Duties">Основные должностные обязанности *:</label>' +
             '<textarea class="form-control" type="text" id="experience_' + String(count) + '_duties" name="experience['+ String(count) + '][duties]"></textarea>' +
             '</div>'
             '<br />';
@@ -607,14 +607,19 @@ function switch_pills_on_last_field_and_focus(validate_fields, for_current = fal
 
     let focusedElement
 
+    if (fieldname == "experience"){
+        el = document.getElementById("experience_fields")
+    }
+
     if (el) {
-        if (el.className.indexOf("table table-") > -1 || el.id == "candidate_experience"){
+        if (el.className.indexOf("table table-") > -1 || el.id == "experience_fields"){
             inputSelector = el.querySelectorAll("input")
             if (inputSelector.length == 0){
                 add_new_row_to_tab(el.id, position_type)
-                set_required_for_fields(el, ["input", "text"])               
+                set_required_for_fields(el, ["input", "text"])  
+                
+                inputSelector = el.querySelectorAll("input")
             }
-            inputSelector = el.querySelectorAll("input")
             focusedElement = inputSelector[0]
         }else{
             focusedElement = el    
@@ -732,21 +737,21 @@ function pills_cathegory(fieldname){
         }
     }else{
         cathegory_hash = {
-            "education"                             : '#pills-tab li:nth-child(3) a',
-            "experience"                            : '#pills-tab li:nth-child(4) a',
-            "ready_to_start_work"                   : '#pills-tab li:nth-child(5) a',
-            "bad_habits"                            : '#pills-tab li:nth-child(5) a',
-            "health_status"                         : '#pills-tab li:nth-child(5) a',
-            "previous_conviction"                   : '#pills-tab li:nth-child(5) a',
-            "administrative_penalties"              : '#pills-tab li:nth-child(5) a',
-            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(5) a',
-            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(5) a',
-            "job_data_source"                       : '#pills-tab li:nth-child(5) a',
-            "last_average_monthly_income"           : '#pills-tab li:nth-child(5) a',
-            "data_verification"                     : '#pills-tab li:nth-child(5) a',
-            "trial_period_salaries"                 : '#pills-tab li:nth-child(5) a',
-            "post_trial_salaries"                   : '#pills-tab li:nth-child(5) a',
-            "desired_pay_system"                    : '#pills-tab li:nth-child(5) a',
+            "education"                             : '#pills-tab li:nth-child(2) a',
+            "experience"                            : '#pills-tab li:nth-child(3) a',
+            "ready_to_start_work"                   : '#pills-tab li:nth-child(6) a',
+            "bad_habits"                            : '#pills-tab li:nth-child(6) a',
+            "health_status"                         : '#pills-tab li:nth-child(6) a',
+            "previous_conviction"                   : '#pills-tab li:nth-child(6) a',
+            "administrative_penalties"              : '#pills-tab li:nth-child(6) a',
+            "obligations_under_orders_of_execution" : '#pills-tab li:nth-child(6) a',
+            "previous_job_disciplinary_penalties"   : '#pills-tab li:nth-child(6) a',
+            "job_data_source"                       : '#pills-tab li:nth-child(6) a',
+            "last_average_monthly_income"           : '#pills-tab li:nth-child(6) a',
+            "data_verification"                     : '#pills-tab li:nth-child(6) a',
+            "trial_period_salaries"                 : '#pills-tab li:nth-child(6) a',
+            "post_trial_salaries"                   : '#pills-tab li:nth-child(6) a',
+            "desired_pay_system"                    : '#pills-tab li:nth-child(6) a',
             }
         }
 

@@ -60,7 +60,8 @@ class CandidatesController < ApplicationController
       params[:candidate][:position] = vacancy_guid if @vacancy
 
       @vacancies = Vacancy.all
-      @error = error(candidate, [])
+      @validate_fields = []
+      @error = error(candidate, @validate_fields)
       erb :new
     end
   end
