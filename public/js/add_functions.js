@@ -44,7 +44,7 @@ function validateEmail(mail)
 function fill_residence_adr() {
     document.getElementById("candidate_residence_city").value       = document.getElementById("candidate_registration_city").value
     document.getElementById("candidate_residence_street").value     = document.getElementById("candidate_registration_street").value
-    document.getElementById("candidate_rresidence_house").value     = document.getElementById("candidate_registration_house").value
+    document.getElementById("candidate_residence_house").value     = document.getElementById("candidate_registration_house").value
     document.getElementById("candidate_residence_apartment").value  = document.getElementById("candidate_registration_apartment").value
 
     return (false) // Стандартная обработка
