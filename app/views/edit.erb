@@ -4,7 +4,7 @@
 	<img src="/img/logo.png" class="rounded mx-auto d-block" alt="EKT group" width="100">
 	<div class="container d-flex flex-column align-items-center">
 		<h4 class="display-4">АНКЕТА КАНДИДАТА</h4>
-		<p class="lead">№ <%= @candidate.guid %></p>
+		<p class="lead" <%= "hidden" unless user_signed_in? %>>№ <%= @candidate.guid %></p>
 	</div>
 </div>
 

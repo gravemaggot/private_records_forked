@@ -59,7 +59,7 @@ function add_relatives_table_new_row(){
 
     rowElement = document.createElement("tr")
     rowElement.innerHTML =
-        '<td><select class="form-control" type="text" id="relatives_' + String(count-1) + '_type" name="relatives[' + String(count-1) + '][type]"></select></td>' +
+        '<th scope="row"><select class="form-control" type="text" id="relatives_' + String(count-1) + '_type" name="relatives[' + String(count-1) + '][type]"></select></th>' +
         '<td><input class="form-control" type="text" id="relatives_' + String(count-1)  + '_name" name="relatives[' + String(count-1)  + '][name]"></input></td>' +
         '<td><input class="form-control" type="date" id="relatives_' + String(count-1)  + '_date" name="relatives[' + String(count-1)  + '][date]"></input></td>' +
         '<td><input class="form-control" type="text" id="relatives_' + String(count-1)  + '_job"  name="relatives[' + String(count-1)  + '][job]"></input></td>' +
@@ -554,7 +554,7 @@ function add_validation_tags(validate_fields){
         el = document.getElementById("candidate_" + fields[i])
         if (el){
             if (el.className.indexOf("table table-bordered") > -1){
-                el.classList.value = "table table-danger"
+                el.classList.value = "table table-danger table-responsive"
                 set_required_for_fields(el, ["input", "textarea"])
             }else if (el.className.indexOf("input-group-prepend") > -1){
                 el.parentElement.parentElement.parentElement.querySelectorAll("label")[0].style = "color:#dc3545"

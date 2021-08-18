@@ -1,0 +1,8 @@
+.form-control.is-valid, .was-validated .form-control:valid {
+    padding-right: calc(.7em + .75rem);
+}
+
+.form-control.is-valid, .was-validated .form-control:invalid {
+    padding-right: calc(.7em + .75rem);
+}
+
