@@ -45,4 +45,8 @@ $(function(){
     $(document).on("click", ".delete", function(){
         $(this).parents("tr").remove();
     });
+    
+    // Consent personal data
+    modalElement = document.getElementById('consentModal')
+    if (modalElement && !(document.cookie == "consense_agree")) {$('#consentModal').modal()}
 });  

@@ -542,6 +542,12 @@ function  deactive_candidate(){
     return (true)
 }
 
+// Consense personal data
+function  consense_sure(){
+    document.cookie = "consense_agree"
+    return (true)
+}
+
 // Validation
 
 function add_validation_tags(validate_fields){
