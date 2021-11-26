@@ -95,6 +95,7 @@ class Candidate
   field :previous_job_disciplinary_penalties,   type: String
   field :job_data_source,                       type: String
   field :data_verification,                     type: Boolean
+  field :data_verification_date,                type: Date
   field :about_yourself,                        type: String
   field :author_email,                          type: String
   field :author_id,                             type: String
@@ -127,6 +128,8 @@ class Candidate
             :education,
             :experience,
             :ready_to_start_work,
+            :data_verification,
+            :data_verification_date,
             presence: true, unless: proc { |a| a.active }
 
   validates :bad_habits,
@@ -137,7 +140,6 @@ class Candidate
             :previous_job_disciplinary_penalties,
             :job_data_source,
             :last_average_monthly_income,
-            :data_verification,
             presence: true, if: proc { |a| !a.active && a.position_type == 'worker' }
 
   validates :marital_status,
