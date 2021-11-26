@@ -544,7 +544,28 @@ function  deactive_candidate(){
 
 // Consense personal data
 function  consense_sure(){
-    document.cookie = "consense_agree"
+    document.getElementById("candidate_data_verification").value = "true"
+    document.getElementById("candidate_data_verification_date").value = (new Date).toISOString().substr(0,10)
+    return (true)
+}
+
+function validate_sure_checks() {
+    all_sure = true;
+
+    check_isd = ["operator_sure", "polit_sure", "cansel_sure"]
+    for (id in check_isd) {
+        check_id = check_isd[id]
+        check_element = document.getElementById(check_id)
+        if (check_element) {
+            all_sure = all_sure && check_element.checked 
+        }
+    }
+
+    sure_button = document.getElementById("sure_button")
+    if (sure_button){
+        sure_button.disabled = !(all_sure)    
+    }
+
     return (true)
 }
 

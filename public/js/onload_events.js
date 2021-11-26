@@ -48,5 +48,5 @@ $(function(){
     
     // Consent personal data
     modalElement = document.getElementById('consentModal')
-    if (modalElement && !(document.cookie == "consense_agree")) {$('#consentModal').modal()}
+    if (modalElement && !(document.getElementById("candidate_data_verification").value == "true")) {$('#consentModal').modal()}
 });  

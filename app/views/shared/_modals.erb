@@ -6,9 +6,32 @@
       </div>
       <div class="modal-body">
         <p>Для дальнейшей работы необходимо дать согласие на обработку персональных данных.</p>
+        <br>Настоящее Согласие вступает в силу с момента его предоставления и действует в течение всего срока рассмотрения 
+        кандидатуры Субъекта на замещение имеющихся у Оператора вакантных должностей до момента заключения трудового договора
+        и (или) в течение трех лет с даты получения настоящего согласия. 
+        <br>
+        <br>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="operator_sure" onclick="validate_sure_checks()">
+          <label class="form-check-label" for="OperatorSure">На протяжении данного срока Оператор вправе обрабатывать мои персональные данные, 
+          указанные в настоящем согласии.</label>
+        </div>
+        <br>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="polit_sure" onclick="validate_sure_checks()">
+          <label class="form-check-label" for="OperatorSure">Я ознакомлен(а) с Политикой ООО «ЕКТ Компани» в отношении обработки персональных данных по ссылке 
+          <a href="https://ekt.by/about/career/politika/" target="_blank">https://ekt.by/about/career/politika/</a>.</label>
+        </div>
+        <br>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="cansel_sure" onclick="validate_sure_checks()">
+          <label class="form-check-label" for="OperatorSure">Мне известно, что настоящее согласие в любой момент может быть мною отозвано согласно Закону Республики Беларусь 
+          от 07.05.2021 №99-З «О защите персональных данных» посредствам направления Оператору письменного заявления, 
+          направленного заказным письмом или переданного лично по адресу: 220053, г Минск, ул. Будславская, д.29.</label>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="consense_sure()">Я согласен на обработку персональных данных</button>
+        <button disabled id="sure_button" type="button" class="btn btn-primary" data-dismiss="modal" onclick="consense_sure()">Я согласен на обработку персональных данных</button>
       </div>
     </div>
   </div>
