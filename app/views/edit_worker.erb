@@ -8,6 +8,8 @@
 	</div>
 </div>
 
+<%= erb :'shared/_terms_edit' %>
+
 <div hidden id="is_worker"></div>
 
 <form action="<%= "/candidates/#{@candidate.guid}" %>" method="POST" enctype="multipart/form-data" <%= 'class="was-validated"' if @error && @error.length > 0 %> id="candidate_form" novalidate>

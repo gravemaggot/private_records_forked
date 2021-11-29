@@ -15,6 +15,10 @@ class CandidatesController < ApplicationController
     end
   end
 
+  get '/terms/' do
+    erb :'pages/terms'
+  end
+
   # new
   get '/candidates/new' do
     if user_signed_in?

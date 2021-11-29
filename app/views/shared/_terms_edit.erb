@@ -1,0 +1,22 @@
+<% if user_signed_in? && false %>
+    <div>
+        <div>
+            <label>Кандидат дал согласие на обработку личных данных: </label>
+            <input type="checkbox" <%= 'checked' if @candidate.data_verification %> disabled>
+        </div>
+        <div>
+            <label>Дата согласия на обработку персональных данных</label>
+            <input type="date" value="<%= @candidate.data_verification_date if @candidate.data_verification_date %>" disabled>
+        </div>
+    </div>
+<% else %>
+    <% if @candidate.data_verification && candidate.data_verification_date%>
+        <div style="background-color: #e9ecef;padding: 12px; margin-bottom: 35px;">
+            <ul>
+                <li>Вы дали согласие на обработку персональных данных <%= @candidate.data_verification_date.strftime('%d.%m.%Y г') %>. Подробнее по <a href="/terms/" target="_blank">ссылке</a>.</li>
+                <li>Вы ознакомились <%= @candidate.data_verification_date.strftime('%d.%m.%Y г.') %> с политикой ООО «ЕКТ Компани» в отношении обработки персональных данных по <a href="https://ekt.by/about/career/politika/" target="_blank">ссылке</a>.</li>
+                <li>Вы подтвердили <%= @candidate.data_verification_date.strftime('%d.%m.%Y г.') %>, что вам известно о возможности отзыва согласно Закону Республики Беларусь от 07.05.2021 №99-З «О защите персональных данных» посредствам направления Оператору письменного заявления, направленного заказным письмом или переданного лично по адресу: 220053, г Минск, ул. Будславская, д.29.</li>
+            </ul>
+        </div>
+    <% end %>
+<% end %>
