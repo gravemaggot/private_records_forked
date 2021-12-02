@@ -95,7 +95,7 @@ class Candidate
   field :previous_job_disciplinary_penalties,   type: String
   field :job_data_source,                       type: String
   field :data_verification,                     type: Boolean
-  field :data_verification_date,                type: Date
+  field :data_verification_date,                type: DateTime
   field :about_yourself,                        type: String
   field :author_email,                          type: String
   field :author_id,                             type: String
