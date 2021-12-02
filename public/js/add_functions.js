@@ -545,7 +545,7 @@ function  deactive_candidate(){
 // Consense personal data
 function  consense_sure(){
     document.getElementById("candidate_data_verification").value = "true"
-    document.getElementById("candidate_data_verification_date").value = (new Date).toISOString().substr(0,10)
+    document.getElementById("candidate_data_verification_date").value = (new Date).toISOString()
     return (true)
 }
 
