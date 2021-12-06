@@ -21,7 +21,13 @@
     <% unless @candidates.nil? %>
         <% @candidates.order('active DESC, created_at DESC').each do |candidate| %>
           <tr>
-            <td><%= 'Заполнение' if candidate.active %></td>
+            <td>
+              <% if candidate.state_code == '000000005' %>
+                Таймаут
+              <% elsif candidate.active %>
+                Заполнение
+              <% end %>
+            </td>
             <td><%= candidate.guid %></td>
             <td>
             <% if candidate.image_identifier %>

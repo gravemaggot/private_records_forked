@@ -100,6 +100,7 @@ class Candidate
   field :author_email,                          type: String
   field :author_id,                             type: String
   field :active,                                type: Boolean
+  field :state_code,                            type: String
   # TODO: syncid
 
   mount_uploader :image, ImageUploader, type: String
@@ -130,7 +131,7 @@ class Candidate
             :ready_to_start_work,
             :data_verification,
             :data_verification_date,
-            presence: true, unless: proc { |a| a.active }
+            presence: true, unless: proc { |a| a.active || a.state_code == '000000005'}
 
   validates :bad_habits,
             :health_status,
@@ -140,7 +141,7 @@ class Candidate
             :previous_job_disciplinary_penalties,
             :job_data_source,
             :last_average_monthly_income,
-            presence: true, if: proc { |a| !a.active && a.position_type == 'worker' }
+            presence: true, if: proc { |a| !a.active && a.position_type == 'worker' && a.state_code != '000000005' }
 
   validates :marital_status,
             :citizenship,
@@ -157,7 +158,7 @@ class Candidate
             :overtime_work,
             :business_trips,
             :training,
-            presence: true, if: proc { |a| !a.active && a.position_type != 'worker' }
+            presence: true, if: proc { |a| !a.active && a.position_type != 'worker' && a.state_code != '000000005'}
 
   index({ guid: 1 }, { unique: true, name: 'guid_index' })
 
