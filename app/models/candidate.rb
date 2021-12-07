@@ -123,7 +123,7 @@ class Candidate
             :registration_city, :registration_street, :registration_house, # :registration_apartment,
             :residence_city, :residence_street, :residence_house, # :residence_apartment,
             :military_registration,
-            :relatives,
+            # :relatives,
             :drivers_license,
             :having_a_car,
             :education,
