@@ -8,8 +8,9 @@ class CandidatesController < ApplicationController
   # index
   get '/?:page?' do
     if user_signed_in?
+      @per_page   = [params[:per_page].to_i, 5].max
       @page       = [params[:page].to_i, 1].max
-      @candidates = Kaminari.paginate_array(Candidate.order('active DESC, created_at DESC')).page(@page).per(5)
+      @candidates = Kaminari.paginate_array(Candidate.order('active DESC, created_at DESC')).page(@page).per(@per_page)
       @min_page   = [1, [@page - 1, @candidates.total_pages - 2].min].max
       @max_page   = [@candidates.total_pages, [@page + 1, 3].max].min
       erb :index

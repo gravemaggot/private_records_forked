@@ -56,19 +56,37 @@
   </table>
   <div class="form-row">
     <div class="form-group col-md-2">
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation">
         <ul class="pagination">
-          <li class="page-item<%= ' disabled' if @page == 1 %>"><a class="page-link" href="<%= @page - 1 %>">&laquo;</a></li>
+          <li class="page-item<%= ' disabled' if @page == 1 %>"><a class="page-link" href="<%= @page - 1 %><%= "?per_page=#@per_page" if @per_page %>">&laquo;</a></li>
           <% for page_num in @min_page..@max_page do %>
-            <li class="page-item<%= ' active' if page_num == @page%>"><a class="page-link" href="<%= page_num %>"><%= page_num %></a></li>
+            <li class="page-item<%= ' active' if page_num == @page%>"><a class="page-link" href="<%= page_num %><%= "?per_page=#@per_page" if @per_page %>"><%= page_num %></a></li>
           <% end %>
 
-          <li class="page-item<%= ' disabled' if @max_page ==  @page%>"><a class="page-link" href="<%= @page + 1 %>">&raquo;</a></li>
+          <li class="page-item<%= ' disabled' if @max_page ==  @page%>"><a class="page-link" href="<%= @page + 1 %><%= "?per_page=#@per_page" if @per_page %>">&raquo;</a></li>
         </ul>
       </nav>
     </div>
     <div class="form-group col-md-2">
       <label class="pages"><%= [@candidates.limit_value * @page, @candidates.total_count].min %> / <%= @candidates.total_count %></label>
+    </div>
+    <div class="form-group col-md-7">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="pages" for = "items_per_page">Выводить по: </label>
+        </div>
+        <div class="form-group col-md-2">
+          <select class="form-control" name="per_page" id="per_page" onchange="document.getElementById('per_page_set').href = '/1?per_page=' + String(this.value)">
+            <option value="5"  <%= 'selected' if @per_page == 5  %>>5</option>
+            <option value="10" <%= 'selected' if @per_page == 10 %>>10</option>
+            <option value="25" <%= 'selected' if @per_page == 25 %>>25</option>
+            <option value="50" <%= 'selected' if @per_page == 50 %>>50</option>
+          </select>
+        </div>
+        <div class="form-group col-md-2">
+            <a id="per_page_set" class="btn btn-primary btn-sm" href="/">Применить</a>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
