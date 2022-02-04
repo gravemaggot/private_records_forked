@@ -6,9 +6,12 @@ class CandidatesController < ApplicationController
   include Helpers
 
   # index
-  get '/' do
+  get '/?:page?' do
     if user_signed_in?
-      @candidates = Candidate.all # TODO: don't use `all` in production
+      @page       = [params[:page].to_i, 1].max
+      @candidates = Kaminari.paginate_array(Candidate.order('active DESC, created_at DESC')).page(@page).per(5)
+      @min_page   = [1, [@page - 1, @candidates.total_pages - 2].min].max
+      @max_page   = [@candidates.total_pages, [@page + 1, 3].max].min
       erb :index
     else
       erb :login

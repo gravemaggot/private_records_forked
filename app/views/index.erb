@@ -19,7 +19,7 @@
     </thead>
     <tbody>
     <% unless @candidates.nil? %>
-        <% @candidates.order('active DESC, created_at DESC').each do |candidate| %>
+        <% @candidates.each do |candidate| %>
           <tr>
             <td>
               <% if candidate.state_code == '000000005' %>
@@ -54,4 +54,21 @@
       <% end %>
     </tbody>
   </table>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item<%= ' disabled' if @page == 1 %>"><a class="page-link" href="<%= @page - 1 %>">&laquo;</a></li>
+          <% for page_num in @min_page..@max_page do %>
+            <li class="page-item<%= ' active' if page_num == @page%>"><a class="page-link" href="<%= page_num %>"><%= page_num %></a></li>
+          <% end %>
+
+          <li class="page-item<%= ' disabled' if @max_page ==  @page%>"><a class="page-link" href="<%= @page + 1 %>">&raquo;</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="form-group col-md-2">
+      <label class="pages"><%= [@candidates.limit_value * @page, @candidates.total_count].min %> / <%= @candidates.total_count %></label>
+    </div>
+  </div>
 <% end %>
