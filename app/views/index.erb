@@ -25,7 +25,9 @@
               <% if candidate.state_code == '000000005' %>
                 Таймаут
               <% elsif candidate.active %>
-                Заполнение
+                Анкетирование
+              <% else %>
+                Заполнено
               <% end %>
             </td>
             <td><%= candidate.guid %></td>
