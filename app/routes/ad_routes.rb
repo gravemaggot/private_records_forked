@@ -4,6 +4,13 @@
 class AdRoutes < ApplicationController
   include Helpers
 
+  # files from front-end
+  get '/app/:dirname/:file' do
+    return unless %w[javascript styles images].index(params[:dirname])
+
+    send_file(File.join(File.dirname(__FILE__), "/../#{params[:dirname]}/#{params[:file]}"))
+  end
+
   ####### API v1 #######
   namespace '/api/v1' do
     # before

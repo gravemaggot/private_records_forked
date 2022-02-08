@@ -69,7 +69,7 @@ class CandidatesController < ApplicationController
 
       @vacancies = Vacancy.all
       @validate_fields = []
-      @error = error(candidate, @validate_fields)
+      @error = erb_error(candidate, @validate_fields)
       erb :new
     end
   end
@@ -109,7 +109,7 @@ class CandidatesController < ApplicationController
       add_arrays_to_candidate(@candidate, params, position_type, true)
 
       intitalise_form_variables(position_type)
-      @error = error(@candidate, @validate_fields)
+      @error = erb_error(@candidate, @validate_fields)
       get_view_for_type(:edit, position_type)
     end
   end

@@ -76,8 +76,7 @@ module Helpers
   end
 
   # Candidate write methods
-  def error(object, fldsnms)
-    # object.errors.full_messages.first
+  def erb_error(object, fldsnms)
     error_texts = []
     object.errors.each do |k, v|
       error_text = t("candidate.error.#{k}")
